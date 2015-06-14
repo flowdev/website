@@ -1,0 +1,43 @@
+/* Overwrite bootstrap as necessary
+-------------------------------------------------- */
+
+/* Header:
+-------------------------------------------------- */
+
+.navbar-brand {
+  padding: 5px;
+  height: 80px;
+}
+.navbar-brand > img {
+  height: 70px;
+}
+
+.navbar-default .navbar-nav > li > a {
+  line-height: 55px;
+  font-size: 1.6em;
+  padding-bottom: 10px;
+  color: #fff;
+}
+
+.navbar-default {
+  background-color: #428BCA;
+  border-color: #00569a;
+}
+
+
+/* Footer:
+-------------------------------------------------- */
+
+#footer {
+  background-color: #428BCA;
+}
+
+#footer .container a:hover, #footer .container a:focus {
+  color: #333;
+}
+#footer .container a:visited {
+  border-color: #00569a;
+}
+#footer .container, #footer .container a {
+  color: #fff;
+}

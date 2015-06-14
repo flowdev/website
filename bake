@@ -1,0 +1,47 @@
+#!/bin/bash
+
+BASE_DIR=$(dirname "$0")
+FLOWDEV_BASE_DIR="$HOME/work/flowdev/jbase"
+
+function copySources {
+  local dst="$1"
+
+  cp "$FLOWDEV_BASE_DIR/src/test/java/org/flowdev/base/Sample.java" "$dst/Sample.java"
+  stripCmt < "$FLOWDEV_BASE_DIR/src/main/java/org/flowdev/base/Port.java"  > "$dst/strip_Port.java"
+  stripCmt < "$dst/Sample.java"  > "$dst/strip_Sample.java"
+}
+
+function mvImages {
+  local src="$1"
+  local dst="$2"
+  local srcLen=${#src}
+
+  mvFiles "$dst" "$src"*.svg
+  mvFiles "$dst" "$src"*.svg.cache
+
+  for dir in "$src"**/ ; do
+    if [[ -d "$dir" ]] ; then
+      mvImages "$dir" "$dst${dir:$srcLen}"
+    fi
+  done
+}
+
+function mvFiles {
+  local dst="$1"
+  shift
+
+  for f in "$@" ; do
+    if [[ -e "$f" ]] ; then
+      mv -f "$f" "$dst"
+    fi
+  done
+}
+
+
+copySources "${BASE_DIR}/java"
+
+jbake "." "../public"
+
+mvImages "${BASE_DIR}/content/" "${BASE_DIR}/../public/"
+
+exec jbake --server

@@ -1,0 +1,13 @@
+= First Post (Just a Test)
+Ole Bulbuk
+2015-06-13
+:jbake-type: post
+:jbake-status: published
+:jbake-tags: blog, test
+:idprefix:
+
+Lorem ipsum dolor sit amet.
+
+* Bla, bla.
+* Blue, blu.
+

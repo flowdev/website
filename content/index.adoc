@@ -1,0 +1,100 @@
+title=Modular programming made simple and efficient
+date=2015-05-24
+type=page
+status=published
+~~~~~~
+
+
+:imagesdir: ./images
+
+[flowdev, Introduction, horizontal]
+....
+  (Input) [InputData]-> (Process) [OutputData]-> (Output) ;
+....
+
+Imagine you could build big complex applications solely from small, independent and testable components.
+Well, now you can!
+
+
+== Ports as the glue between components
+
+`Port` is a single method interface and acts as the glue between all components.
+
+[source,java]
+----
+include::../java/strip_Port.java[]
+----
+
+The sender of a data package is calling the interface and the receiver of the data package has to implement it.
+The interface is usually implemented with a Java 8 lambda that often calls a method in the enclosing class.
+
+
+== Building the first component
+
+Lets first build a very simple component that is just able to greet.
+
+[source,java]
+----
+include::../java/Sample.java[tags=SayHello]
+----
+<1> Here we implement the `Port` interface as a simple Java 8 lambda.
+<2> This is just a standard Java getter for the input port.
+
+
+== Building a second component
+
+[source,java]
+----
+include::../java/Sample.java[tags=TellNames]
+----
+<1> We simply declare the `Port` interface and don't care about its implementation.
+<2> This is just a standard Java setter for the output port.
+
+
+== Connecting the components
+
+Now lets see how to connect components.
+
+[source,java]
+----
+include::../java/Sample.java[tags=connect]
+----
+<1> The components have to be constructed first of course.
+<2> The components are connected by simply setting the input port of the receiving component as the output port of the sending component.
+
+
+== Putting it all together
+
+Our little example flow looks like this:
+
+[flowdev, Sample, horizontal]
+....
+  (TellNames) [String]-> (SayHello) ;
+....
+
+And here is the complete source code:
+
+[source,java]
+----
+include::../java/strip_Sample.java[]
+----
+
+When you run it you should see the following output:
+
+....
+Hello, Harry!
+Hello, Joanne!
+Hello, Ron!
+Hello, Lily!
+....
+
+
+== Additional topics
+
+There are many more topics:
+
+* Writing reusable components.
+* Overhead and performance of flow components.
+* Standard getters and setters or modern fluent interfaces?
+
+Theese will be covered in future blog posts.
